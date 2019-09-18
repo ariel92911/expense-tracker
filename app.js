@@ -1,6 +1,10 @@
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
+const exphbs = require('express-handlebars')
+
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+app.set('view engine', 'handlebars')
 
 mongoose.connect('mongodb://localhost/record', { useUnifiedTopology: true, useNewUrlParser: true })
 
@@ -21,7 +25,7 @@ const Record = require('./models/record')
 
 // 設定第一個首頁路由
 app.get('/', (req, res) => {
-  res.send('這是記帳首頁')
+  return res.render('index')
 })
 // 列出全部 record
 app.get('/records', (req, res) => {

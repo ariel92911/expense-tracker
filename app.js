@@ -2,9 +2,11 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
+const bodyParser = require('body-parser')
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
+app.use(bodyParser.urlencoded({ extended: true }))
 
 mongoose.connect('mongodb://localhost/record', { useUnifiedTopology: true, useNewUrlParser: true })
 
@@ -36,11 +38,22 @@ app.get('/records', (req, res) => {
 })
 // 新增一筆 record 頁面
 app.get('/records/new', (req, res) => {
-  res.send('新增 record 頁面')
+  return res.render('new')
 })
 // 新增一筆  record
 app.post('/records', (req, res) => {
-  res.send('建立 record')
+  console.log(req.body)
+  const record = new Record({
+    name: req.body.name,
+    category: req.body.category,
+    date: req.body.date,
+    amount: req.body.amount
+  })
+  // 存入資料庫
+  record.save(err => {
+    if (err) return console.error(err)
+    return res.redirect('/')  // 新增完成後，將使用者導回首頁
+  })
 })
 // 修改 record 頁面
 app.get('/records/:id/edit', (req, res) => {

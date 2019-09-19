@@ -34,12 +34,11 @@
               <div class="row">{{{this.name}}}</div>
               <div class="row">{{{this.date}}}</div>
             </td>
-            <td>{{{this.amount}}}</td>
+            <td class="text-right">{{{this.amount}}}</td>
             <td class="text-right">
-              <a href="#">修改</a>
+              <a href="/records/{{{this.id}}}/edit">修改</a>
               <button type="submit">刪除</button>
             </td>
-
           </tr>
 
           {{/each}}

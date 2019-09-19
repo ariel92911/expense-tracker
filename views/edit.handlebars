@@ -1,4 +1,4 @@
-<!-- ./views/new.handlebars -->
+<!-- ./views/edit.handlebars -->
 
 <div class="container py-5">
 
@@ -6,16 +6,17 @@
     <div class="col-12 col-lg-10 col-xl-8 mx-auto">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title text-center">請輸入你的支出 </h5>
+          <h5 class="card-title text-center">請修改你的支出 </h5>
           <hr>
-          <form action="/records" method="POST">
+          <form action="/records/{{{record.id}}}/edit" method="POST">
 
             <div class="form-group form-row">
               <label for="name" class="col-md-2 col-form-label">
                 名稱
               </label>
               <div class="col-md-10">
-                <input type="text" name="name" class="form-control" id="name" placeholder="" required>
+                <input type="text" name="name" class="form-control" id="name" placeholder="" value="{{{record.name}}}"
+                  required>
               </div>
             </div>
 
@@ -24,7 +25,8 @@
                 日期
               </label>
               <div class="col-md-10">
-                <input type="date" name="date" class="form-control" id="date" placeholder="" required>
+                <input type="date" name="date" class="form-control" id="date" placeholder="" value="{{{record.date}}}"
+                  required>
               </div>
             </div>
 
@@ -33,7 +35,7 @@
                 類別
               </label>
               <div class="col-md-10">
-                <select name="category" class="form-control" id="category" placeholder="" required>
+                <select name="category" class="form-control" id="category" value="{{{record.category}}}" required>
                   <option>家居物業</option>
                   <option>交通出行</option>
                   <option>休閒娛樂</option>
@@ -48,12 +50,13 @@
                 金額
               </label>
               <div class="col-md-10">
-                <input type="number" name="amount" class="form-control" id="amount" placeholder="" min="0" required>
+                <input type="number" name="amount" class="form-control" id="amount" placeholder="" min="0"
+                  value="{{{record.amount}}}" required>
               </div>
             </div>
 
             <div class="row">
-              <button class="btn btn-success" type="submit">新增支出</button>
+              <button class="btn btn-success" type="submit">送出</button>
             </div>
 
           </form>

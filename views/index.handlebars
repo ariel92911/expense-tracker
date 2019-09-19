@@ -1,2 +1,55 @@
 <!-- ./views/index.handlebars -->
-<h2>hello world! 這是 index</h2>
+
+<div class="container">
+  <div class="row">
+    <div class="dropdown">
+      <button class="btn btn-outline-dark dropdown-toggle btn-lg" type="button" id="dropdownMenuButton"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        類別
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="#">家居物業</a>
+        <a class="dropdown-item" href="#">交通出行</a>
+        <a class="dropdown-item" href="#">休閒娛樂</a>
+        <a class="dropdown-item" href="#">餐飲食品</a>
+        <a class="dropdown-item" href="#">其他</a>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <h1>總金額：</h1>
+    <h1>1000</h1>
+  </div>
+
+  <div class="row">
+    <div class="col align-self-center">
+      <table class="table table-striped">
+        <tbody>
+          {{#each records}}
+          <tr>
+            <th scope="row">{{{this.category}}}</th>
+            <td>
+              <div class="row">{{{this.name}}}</div>
+              <div class="row">{{{this.date}}}</div>
+            </td>
+            <td>{{{this.amount}}}</td>
+            <td class="text-right">
+              <a href="#">修改</a>
+              <button type="submit">刪除</button>
+            </td>
+
+          </tr>
+
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+
+
+  </div>
+  <div class="text-center">
+    <a href="/records/new">新增支出</a>
+  </div>
+
+
+</div>

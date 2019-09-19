@@ -25,11 +25,14 @@ const Record = require('./models/record')
 
 // 設定第一個首頁路由
 app.get('/', (req, res) => {
-  return res.render('index')
+  Record.find((err, records) => {
+    if (err) return console.error(err)
+    return res.render('index', { records: records })  // 將資料傳給 index 樣板
+  })
 })
 // 列出全部 record
 app.get('/records', (req, res) => {
-  res.send('列出所有 record')
+  return res.redirect('/')
 })
 // 新增一筆 record 頁面
 app.get('/records/new', (req, res) => {

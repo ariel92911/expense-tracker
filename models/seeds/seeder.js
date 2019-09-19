@@ -15,7 +15,12 @@ db.once('open', () => {
   console.log('mongodb connected!')
 
   for (let i = 0; i < 10; i++) {
-    Record.create({ name: 'name-' + i })
+    Record.create({
+      name: 'name-' + i,
+      category: 'category-' + i,
+      date: 'date-' + i,
+      amount: i
+    })
   }
 
 

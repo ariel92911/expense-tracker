@@ -11,7 +11,7 @@ app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({ extended: true }))
 
 
-mongoose.connect('mongodb://localhost/record', { useUnifiedTopology: true, useNewUrlParser: true })
+mongoose.connect('mongodb://localhost/record', { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
 
 // mongoose 連線後透過 mongoose.connection 拿到 Connection 的物件
 const db = mongoose.connection

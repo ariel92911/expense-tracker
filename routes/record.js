@@ -33,7 +33,7 @@ router.get('/category/:item', authenticated, (req, res) => {
       break;
   }
 
-  Record.find({ 'category': category }, (err, records) => {
+  Record.find({ 'category': category, userId: req.user._id }, (err, records) => {
     let totalAmount = 0
     for (let i = 0; i < records.length; i++) {
       totalAmount += records[i].amount
@@ -67,12 +67,13 @@ router.get('/new', authenticated, (req, res) => {
 
 // 新增一筆  record 動作
 router.post('/', authenticated, (req, res) => {
-  console.log(req.body)
   const record = new Record({
     name: req.body.name,
     category: req.body.category,
     date: req.body.date,
-    amount: req.body.amount
+    amount: req.body.amount,
+    // 儲存 userId
+    userId: req.user._id
   })
   record.save(err => {
     if (err) return console.error(err)
@@ -82,7 +83,7 @@ router.post('/', authenticated, (req, res) => {
 
 // 修改 record 頁面
 router.get('/:id/edit', authenticated, (req, res) => {
-  Record.findById(req.params.id, (err, record) => {
+  Record.findOne({ _id: req.params.id, userId: req.user._id }, (err, record) => {
     if (err) return console.error(err)
     return res.render('edit', { record: record })
   })
@@ -90,7 +91,7 @@ router.get('/:id/edit', authenticated, (req, res) => {
 
 // 修改 record 動作
 router.post('/:id/edit', authenticated, (req, res) => {
-  Record.findById(req.params.id, (err, record) => {
+  Record.findOne({ _id: req.params.id, userId: req.user._id }, (err, record) => {
     if (err) return console.error(err)
     record.name = req.body.name,
       record.category = req.body.category,
@@ -105,7 +106,7 @@ router.post('/:id/edit', authenticated, (req, res) => {
 
 // 刪除 record 動作
 router.post('/:id/delete', authenticated, (req, res) => {
-  Record.findById(req.params.id, (err, record) => {
+  Record.findOne({ _id: req.params.id, userId: req.user._id }, (err, record) => {
     if (err) return console.error(err)
     record.remove(err => {
       if (err) return console.error(err)

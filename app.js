@@ -4,10 +4,12 @@ const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const session = require('express-session')
+const passport = require('passport')
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({ extended: true }))
+
 
 mongoose.connect('mongodb://localhost/record', { useUnifiedTopology: true, useNewUrlParser: true })
 
@@ -29,6 +31,16 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
 }))
+
+app.use(passport.initialize())
+app.use(passport.session())
+
+require('./config/passport')(passport)
+// 登入後可以取得使用者的資訊方便我們在 view 裡面直接使用
+app.use((req, res, next) => {
+  res.locals.user = req.user
+  next()
+})
 
 // 載入路由器
 app.use('/', require('./routes/home'))

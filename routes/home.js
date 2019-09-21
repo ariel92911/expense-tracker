@@ -1,4 +1,4 @@
-// routes/record.js
+// routes/home.js
 const express = require('express')
 const router = express.Router()
 const Record = require('../models/record')

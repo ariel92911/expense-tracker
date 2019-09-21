@@ -3,6 +3,7 @@ const app = express()
 const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
+const session = require('express-session')
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
@@ -22,6 +23,12 @@ db.on('error', () => {
 db.once('open', () => {
   console.log('mongodb connected!')
 })
+
+app.use(session({
+  secret: 'my secret key',
+  resave: false,
+  saveUninitialized: true,
+}))
 
 // 載入路由器
 app.use('/', require('./routes/home'))

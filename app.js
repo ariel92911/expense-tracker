@@ -26,6 +26,7 @@ db.once('open', () => {
 // 載入路由器
 app.use('/', require('./routes/home'))
 app.use('/records', require('./routes/record'))
+app.use('/users', require('./routes/user'))
 
 // 設定 express port 3000
 app.listen(3000, () => {

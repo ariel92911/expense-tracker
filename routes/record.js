@@ -9,6 +9,38 @@ router.get('/', (req, res) => {
   return res.redirect('/')
 })
 
+// 列出特定類別 record
+router.get('/category/:item', (req, res) => {
+  console.log('req.query', req.params.item)
+  let category_item = req.params.item
+
+  Record.find((err, records) => {
+    let totalAmount = 0
+    for (let i = 0; i < records.length; i++) {
+      totalAmount += records[i].amount
+      switch (records[i].category) {
+        case '家居物業':
+          records[i].category = '<i class="fas fa-home fa-3x"></i>'
+          break;
+        case '交通出行':
+          records[i].category = '<i class="fas fa-shuttle-van fa-3x"></i>'
+          break;
+        case '休閒娛樂':
+          records[i].category = '<i class="fas fa-grin-beam fa-3x"></i>'
+          break;
+        case '餐飲食品':
+          records[i].category = '<i class="fas fa-utensils fa-3x"></i>'
+          break;
+        case '其他':
+          records[i].category = '<i class="fas fa-pen fa-3x"></i>'
+          break;
+      }
+    }
+    if (err) return console.error(err)
+    return res.render('category', { records: records, totalAmount })  // 將資料傳給 index 樣板
+  })
+})
+
 // 新增一筆 record 頁面
 router.get('/new', (req, res) => {
   return res.render('new')

@@ -6,8 +6,29 @@ const Record = require('../models/record')
 // 設定首頁路由
 router.get('/', (req, res) => {
   Record.find((err, records) => {
+    let totalAmount = 0
+    for (let i = 0; i < records.length; i++) {
+      totalAmount += records[i].amount
+      switch (records[i].category) {
+        case '家居物業':
+          records[i].category = '<i class="fas fa-home fa-3x"></i>'
+          break;
+        case '交通出行':
+          records[i].category = '<i class="fas fa-shuttle-van fa-3x"></i>'
+          break;
+        case '休閒娛樂':
+          records[i].category = '<i class="fas fa-grin-beam fa-3x"></i>'
+          break;
+        case '餐飲食品':
+          records[i].category = '<i class="fas fa-utensils fa-3x"></i>'
+          break;
+        case '其他':
+          records[i].category = '<i class="fas fa-pen fa-3x"></i>'
+          break;
+      }
+    }
     if (err) return console.error(err)
-    return res.render('index', { records: records })  // 將資料傳給 index 樣板
+    return res.render('index', { records: records, totalAmount })  // 將資料傳給 index 樣板
   })
 })
 

@@ -11,10 +11,26 @@ router.get('/', (req, res) => {
 
 // 列出特定類別 record
 router.get('/category/:item', (req, res) => {
-  console.log('req.query', req.params.item)
-  let category_item = req.params.item
+  let category = ''
+  switch (req.params.item) {
+    case '1':
+      category = '家居物業'
+      break;
+    case '2':
+      category = '交通出行'
+      break;
+    case '3':
+      category = '休閒娛樂'
+      break;
+    case '4':
+      category = '餐飲食品'
+      break;
+    case '5':
+      category = '其他'
+      break;
+  }
 
-  Record.find((err, records) => {
+  Record.find({ 'category': category }, (err, records) => {
     let totalAmount = 0
     for (let i = 0; i < records.length; i++) {
       totalAmount += records[i].amount
@@ -37,7 +53,7 @@ router.get('/category/:item', (req, res) => {
       }
     }
     if (err) return console.error(err)
-    return res.render('category', { records: records, totalAmount })  // 將資料傳給 index 樣板
+    return res.render('category', { records: records, totalAmount })
   })
 })
 

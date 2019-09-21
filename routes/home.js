@@ -3,8 +3,11 @@ const express = require('express')
 const router = express.Router()
 const Record = require('../models/record')
 
+// 載入 auth middleware 裡的 authenticated 方法
+const { authenticated } = require('../config/auth')
+
 // 設定首頁路由
-router.get('/', (req, res) => {
+router.get('/', authenticated, (req, res) => {
   Record.find((err, records) => {
     let totalAmount = 0
     for (let i = 0; i < records.length; i++) {

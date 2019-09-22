@@ -1,5 +1,9 @@
 const mongoose = require('mongoose')
+const User = require('../user')
 const Record = require('../record')
+const userJson = require('./user.json')
+const expenseRecordJson = require('./expenseRecord')
+const bcrypt = require('bcryptjs')
 
 mongoose.connect('mongodb://localhost/record', { useUnifiedTopology: true, useNewUrlParser: true })
 
@@ -14,15 +18,27 @@ db.on('error', () => {
 db.once('open', () => {
   console.log('mongodb connected!')
 
-  for (let i = 0; i < 10; i++) {
-    Record.create({
-      name: 'name-' + i,
-      category: 'category-' + i,
-      date: '2019-09-' + 10 + i,
-      amount: i
+  User.create(userJson).then(() =>
+
+    User.find({ email: 'user1@example.com' }, (err, user) => {
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(user[0].password, salt, (err, hash) => {
+          if (err) throw err
+          user[0].password = hash
+          user[0].save()
+        })
+      })
+
+      for (let i = 0; i < expenseRecordJson.length; i++) {
+        expenseRecordJson[i]["userId"] = user[0]._id.toString()
+      }
+
     })
-  }
 
+  ).then(() =>
+    Record.create(expenseRecordJson, () => {
+      console.log('done')
+    })
+  )
 
-  console.log('done')
 })

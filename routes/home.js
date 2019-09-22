@@ -12,6 +12,7 @@ router.get('/', authenticated, (req, res) => {
     let totalAmount = 0
     for (let i = 0; i < records.length; i++) {
       totalAmount += records[i].amount
+      console.log('before', records[i].category)
       switch (records[i].category) {
         case '家居物業':
           records[i].category = '<i class="fas fa-home fa-3x"></i>'
@@ -28,7 +29,11 @@ router.get('/', authenticated, (req, res) => {
         case '其他':
           records[i].category = '<i class="fas fa-pen fa-3x"></i>'
           break;
+        default:
+          console.log('123', records[i].category)
+          break;
       }
+      console.log('after', records[i].category)
     }
     if (err) return console.error(err)
     return res.render('index', { records: records, totalAmount })  // 將資料傳給 index 樣板

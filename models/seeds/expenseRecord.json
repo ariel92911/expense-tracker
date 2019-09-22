@@ -1,32 +1,86 @@
 [
   {
     "name": "房租",
+    "merchant": "惡房東",
     "category": "家居物業",
-    "date": "2019-09-10",
+    "date": "2019-01-10",
     "amount": 6500
   },
   {
     "name": "捷運",
+    "merchant": "台北捷運",
     "category": "交通出行",
-    "date": "2019-09-10",
+    "date": "2019-02-10",
     "amount": 30
   },
   {
     "name": "唱歌",
+    "merchant": "星句點",
     "category": "休閒娛樂",
-    "date": "2019-09-10",
+    "date": "2019-03-10",
     "amount": 3000
   },
   {
-    "name": "麥當勞",
+    "name": "漢堡",
+    "merchant": "麥當勞",
+    "category": "餐飲食品",
+    "date": "2019-04-10",
+    "amount": 200
+  },
+  {
+    "name": "愛心捐款",
+    "merchant": "大哥哥大姊姊幫幫忙",
+    "category": "其他",
+    "date": "2019-05-10",
+    "amount": 3
+  },
+  {
+    "name": "房租",
+    "merchant": "惡房東",
+    "category": "家居物業",
+    "date": "2019-06-10",
+    "amount": 6500
+  },
+  {
+    "name": "捷運",
+    "merchant": "台北捷運",
+    "category": "交通出行",
+    "date": "2019-07-10",
+    "amount": 30
+  },
+  {
+    "name": "唱歌",
+    "merchant": "星句點",
+    "category": "休閒娛樂",
+    "date": "2019-08-10",
+    "amount": 3000
+  },
+  {
+    "name": "漢堡",
+    "merchant": "麥當勞",
     "category": "餐飲食品",
     "date": "2019-09-10",
     "amount": 200
   },
   {
-    "name": "愛心捐款",
+    "name": "文具",
+    "merchant": "誠品",
     "category": "其他",
-    "date": "2019-09-10",
-    "amount": 3
+    "date": "2019-10-10",
+    "amount": 240
+  },
+  {
+    "name": "鍋貼",
+    "merchant": "八方",
+    "category": "餐飲食品",
+    "date": "2019-11-10",
+    "amount": 200
+  },
+  {
+    "name": "彩券",
+    "merchant": "威力彩",
+    "category": "其他",
+    "date": "2019-12-10",
+    "amount": 100
   }
 ]

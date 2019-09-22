@@ -5,7 +5,7 @@ const userJson = require('./user.json')
 const expenseRecordJson = require('./expenseRecord')
 const bcrypt = require('bcryptjs')
 
-mongoose.connect('mongodb://localhost/record', { useUnifiedTopology: true, useNewUrlParser: true })
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/record', { useUnifiedTopology: true, useNewUrlParser: true })
 
 const db = mongoose.connection
 

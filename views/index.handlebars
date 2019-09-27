@@ -50,12 +50,11 @@
         {{#each records}}
         <tr>
           <th scope="row" style="vertical-align:middle; color: Dodgerblue;" class="pl-4">{{{this.category}}}</th>
-          <td style="vertical-align:middle;">{{{this.merchant}}}</td>
-          <td class="pl-5">
+          <td>
             <div>{{{this.name}}}</div>
-            <div>{{{this.date}}}</div>
+            <div>{{{this.date}}} {{{this.merchant}}}</div>
           </td>
-          <td class="text-right h4" style="vertical-align:middle;">{{{this.amount}}}</td>
+          <td class="text-right h4" style="vertical-align:middle;">$ {{{this.amount}}}</td>
           <td class="text-right" style="vertical-align:middle;">
             <a href="/records/{{{this.id}}}/edit" class="btn btn-outline-dark">修改<i class="fas fa-edit ml-1"></i></a>
             <form action="/records/{{{this.id}}}/delete" method="POST" style="display: inline;">

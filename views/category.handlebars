@@ -19,10 +19,10 @@
   <div class="form-group col-md-3">
     <select class="form-control" onChange="location = this.options[this.selectedIndex].value;">
       <option style="display: none">類別</option>
-      <option value="/records/category/type_1">家居物業</option>
-      <option value="/records/category/type_2">交通出行</option>
-      <option value="/records/category/type_3">休閒娛樂</option>
-      <option value="/records/category/type_4">餐飲食品</option>
+      <option value="/records/category/type_1" selected="true">家居物業</option>
+      <option value="/records/category/type_2" selected="true">交通出行</option>
+      <option value="/records/category/type_3" selected="true">休閒娛樂</option>
+      <option value="/records/category/type_4" selected="true">餐飲食品</option>
       <option value="/records/category/type_5">其他</option>
     </select>
   </div>
@@ -47,12 +47,11 @@
         {{#each records}}
         <tr>
           <th scope="row" style="vertical-align:middle; color: Dodgerblue;" class="pl-4">{{{this.category}}}</th>
-          <td style="vertical-align:middle;">{{{this.merchant}}}</td>
           <td>
             <div>{{{this.name}}}</div>
-            <div>{{{this.date}}}</div>
+            <div>{{{this.date}}} {{{this.merchant}}}</div>
           </td>
-          <td class="text-right h4" style="vertical-align:middle;">{{{this.amount}}}</td>
+          <td class="text-right h4" style="vertical-align:middle;">$ {{{this.amount}}}</td>
           <td class="text-right" style="vertical-align:middle;">
             <a href="/records/{{{this.id}}}/edit" class="btn btn-outline-dark">修改<i class="fas fa-edit ml-1"></i></a>
             <form action="/records/{{{this.id}}}/delete" method="POST" style="display: inline;">

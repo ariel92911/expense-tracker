@@ -8,19 +8,18 @@ const recordSchema = new Schema({
   },
   merchant: {
     type: String,
-    required: true,
   },
   category: {
     type: String,
-    required: true,
+    required: true
   },
   date: {
     type: String,
-    required: true,
+    required: true
   },
   amount: {
     type: Number,
-    required: true,
+    required: true
   },
   // 加入 userId，建立跟 User 的關聯
   userId: {

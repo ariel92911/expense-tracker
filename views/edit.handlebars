@@ -35,7 +35,8 @@
                 商家
               </label>
               <div class="col-md-10">
-                <input type="text" name="merchant" class="form-control" id="merchant" placeholder="" required>
+                <input type="text" name="merchant" class="form-control" id="merchant" placeholder=""
+                  value="{{{record.merchant}}}">
               </div>
             </div>
 
@@ -45,11 +46,11 @@
               </label>
               <div class="col-md-10">
                 <select name="category" class="form-control" id="category" value="{{{record.category}}}" required>
-                  <option>家居物業</option>
-                  <option>交通出行</option>
-                  <option>休閒娛樂</option>
-                  <option>餐飲食品</option>
-                  <option>其他</option>
+                  <option {{#if categoryFor.Home}} selected {{/if}}>家居物業</option>
+                  <option {{#if categoryFor.Traffic}} selected {{/if}}>交通出行</option>
+                  <option {{#if categoryFor.Fun}} selected {{/if}}>休閒娛樂</option>
+                  <option {{#if categoryFor.Food}} selected {{/if}}>餐飲食品</option>
+                  <option {{#if categoryFor.Other}} selected {{/if}}>其他</option>
                 </select>
               </div>
             </div>

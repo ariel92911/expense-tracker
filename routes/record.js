@@ -17,6 +17,8 @@ router.get('/', authenticated, (req, res) => {
 
 // 列出特定類別 record
 router.get('/category/:item', authenticated, (req, res) => {
+  const options = req.body
+  console.log(options)
   let category = ''
   var itemSplit = req.params.item.split('_')
   let categorySelect = itemSplit[0]
@@ -109,8 +111,32 @@ router.post('/', authenticated, (req, res) => {
 // 修改 record 頁面
 router.get('/:id/edit', authenticated, (req, res) => {
   Record.findOne({ _id: req.params.id, userId: req.user._id }, (err, record) => {
+    let categoryFor = {
+      Home: false,
+      Traffic: false,
+      Fun: false,
+      Food: false,
+      Other: false
+    }
+    switch (record.category) {
+      case '家居物業':
+        categoryFor.Home = true
+        break;
+      case '交通出行':
+        categoryFor.Traffic = true
+        break;
+      case '休閒娛樂':
+        categoryFor.Fun = true
+        break;
+      case '餐飲食品':
+        categoryFor.Food = true
+        break;
+      case '其他':
+        categoryFor.Other = true
+        break;
+    }
     if (err) return console.error(err)
-    return res.render('edit', { record: record })
+    return res.render('edit', { record, categoryFor })
   })
 })
 

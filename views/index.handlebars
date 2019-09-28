@@ -5,30 +5,30 @@
     <div class="form-group col-md-3">
       <select name="month" class="form-control">
         <option style="display: none">月份</option>
-        <option>01月</option>
-        <option>02月</option>
-        <option>03月</option>
-        <option>04月</option>
-        <option>05月</option>
-        <option>06月</option>
-        <option>07月</option>
-        <option>08月</option>
-        <option>09月</option>
-        <option>10月</option>
-        <option>11月</option>
-        <option>12月</option>
-        <option>All</option>
+        <option {{#if monthOption.Jan}} selected {{/if}}>01月</option>
+        <option {{#if monthOption.Feb}} selected {{/if}}>02月</option>
+        <option {{#if monthOption.Mar}} selected {{/if}}>03月</option>
+        <option {{#if monthOption.Apr}} selected {{/if}}>04月</option>
+        <option {{#if monthOption.May}} selected {{/if}}>05月</option>
+        <option {{#if monthOption.Jun}} selected {{/if}}>06月</option>
+        <option {{#if monthOption.Jul}} selected {{/if}}>07月</option>
+        <option {{#if monthOption.Aug}} selected {{/if}}>08月</option>
+        <option {{#if monthOption.Sep}} selected {{/if}}>09月</option>
+        <option {{#if monthOption.Oct}} selected {{/if}}>10月</option>
+        <option {{#if monthOption.Nov}} selected {{/if}}>11月</option>
+        <option {{#if monthOption.Dec}} selected {{/if}}>12月</option>
+        <option {{#if monthOption.All}} selected {{/if}}>All</option>
       </select>
     </div>
     <div class="form-group col-md-3">
       <select name="type" class="form-control">
         <option style="display: none">類別</option>
-        <option>家居物業</option>
-        <option>交通出行</option>
-        <option>休閒娛樂</option>
-        <option>餐飲食品</option>
-        <option>其他</option>
-        <option>All</option>
+        <option {{#if typeOption.Home}} selected {{/if}}>家居物業</option>
+        <option {{#if typeOption.Traffic}} selected {{/if}}>交通出行</option>
+        <option {{#if typeOption.Fun}} selected {{/if}}>休閒娛樂</option>
+        <option {{#if typeOption.Food}} selected {{/if}}>餐飲食品</option>
+        <option {{#if typeOption.Other}} selected {{/if}}>其他</option>
+        <option {{#if typeOption.All}} selected {{/if}}>All</option>
       </select>
     </div>
     <button class="btn btn-primary" type="submit">select</button>
@@ -60,7 +60,7 @@
         <tr>
           <th scope="row" style="vertical-align:middle; color: Dodgerblue;" class="pl-4">{{{this.category}}}</th>
           <td>
-            <div>{{{this.name}}}</div>
+            <div><strong class="h4">{{{this.name}}}</strong></div>
             <div>{{{this.date}}} {{{this.merchant}}}</div>
           </td>
           <td class="text-right h4" style="vertical-align:middle;">$ {{{this.amount}}}</td>

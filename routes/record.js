@@ -14,6 +14,93 @@ router.get('/', authenticated, (req, res) => {
 
 // 列出特定類別 record
 router.get('/category', authenticated, (req, res) => {
+  //記住篩選月份
+  let monthOption = {
+    Jan: false,
+    Feb: false,
+    Mar: false,
+    Apr: false,
+    May: false,
+    Jun: false,
+    Jul: false,
+    Aug: false,
+    Sep: false,
+    Oct: false,
+    Nov: false,
+    Dec: false,
+    All: false
+  }
+  switch (req.query.month) {
+    case '01月':
+      monthOption.Jan = true
+      break;
+    case '02月':
+      monthOption.Feb = true
+      break;
+    case '03月':
+      monthOption.Mar = true
+      break;
+    case '04月':
+      monthOption.Apr = true
+      break;
+    case '05月':
+      monthOption.May = true
+      break;
+    case '06月':
+      monthOption.Jun = true
+      break;
+    case '07月':
+      monthOption.Jul = true
+      break;
+    case '08月':
+      monthOption.Aug = true
+      break;
+    case '09月':
+      monthOption.Sep = true
+      break;
+    case '10月':
+      monthOption.Oct = true
+      break;
+    case '11月':
+      monthOption.Nov = true
+      break;
+    case '12月':
+      monthOption.Dec = true
+      break;
+    case 'All':
+      monthOption.All = true
+      break;
+  }
+
+  //記住篩選類別
+  let typeOption = {
+    Home: false,
+    Traffic: false,
+    Fun: false,
+    Food: false,
+    Other: false,
+    All: false
+  }
+  switch (req.query.type) {
+    case '家居物業':
+      typeOption.Home = true
+      break;
+    case '交通出行':
+      typeOption.Traffic = true
+      break;
+    case '休閒娛樂':
+      typeOption.Fun = true
+      break;
+    case '餐飲食品':
+      typeOption.Food = true
+      break;
+    case '其他':
+      typeOption.Other = true
+      break;
+    case 'All':
+      typeOption.All = true
+      break;
+  }
 
   //預設篩選條件
   let filter = { userId: req.user._id }
@@ -24,6 +111,7 @@ router.get('/category', authenticated, (req, res) => {
   }
 
   Record.find(filter, (err, records) => {
+
     let selectedRecords = []
 
     //判斷有無指定篩選條件-支出月份
@@ -67,10 +155,9 @@ router.get('/category', authenticated, (req, res) => {
           console.log('沒有此類別')
           break;
       }
-
     }
     if (err) return console.error(err)
-    return res.render('index', { records: selectedRecords, totalAmount })  // 將資料傳給 index 樣板
+    return res.render('index', { records: selectedRecords, totalAmount, monthOption, typeOption })  // 將資料傳給 index 樣板
   })
 })
 

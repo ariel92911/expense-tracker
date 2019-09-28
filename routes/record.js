@@ -14,98 +14,78 @@ router.get('/', authenticated, (req, res) => {
 
 // 列出特定類別 record
 router.get('/category', authenticated, (req, res) => {
+
   //記住篩選月份
-  let monthOption = {
-    Jan: false,
-    Feb: false,
-    Mar: false,
-    Apr: false,
-    May: false,
-    Jun: false,
-    Jul: false,
-    Aug: false,
-    Sep: false,
-    Oct: false,
-    Nov: false,
-    Dec: false,
-    All: false
-  }
+  let monthOption = {}
   switch (req.query.month) {
     case '01月':
-      monthOption.Jan = true
+      monthOption['Jan'] = true
       break;
     case '02月':
-      monthOption.Feb = true
+      monthOption['Feb'] = true
       break;
     case '03月':
-      monthOption.Mar = true
+      monthOption['Mar'] = true
       break;
     case '04月':
-      monthOption.Apr = true
+      monthOption['Apr'] = true
       break;
     case '05月':
-      monthOption.May = true
+      monthOption['May'] = true
       break;
     case '06月':
-      monthOption.Jun = true
+      monthOption['Jun'] = true
       break;
     case '07月':
-      monthOption.Jul = true
+      monthOption['Jul'] = true
       break;
     case '08月':
-      monthOption.Aug = true
+      monthOption['Aug'] = true
       break;
     case '09月':
-      monthOption.Sep = true
+      monthOption['Sep'] = true
       break;
     case '10月':
-      monthOption.Oct = true
+      monthOption['Oct'] = true
       break;
     case '11月':
-      monthOption.Nov = true
+      monthOption['Nov'] = true
       break;
     case '12月':
-      monthOption.Dec = true
+      monthOption['Dec'] = true
       break;
     case 'All':
-      monthOption.All = true
+      monthOption['All'] = true
       break;
   }
 
   //記住篩選類別
-  let typeOption = {
-    Home: false,
-    Traffic: false,
-    Fun: false,
-    Food: false,
-    Other: false,
-    All: false
-  }
+  let typeOption = {}
   switch (req.query.type) {
     case '家居物業':
-      typeOption.Home = true
+      typeOption['Home'] = true
       break;
     case '交通出行':
-      typeOption.Traffic = true
+      typeOption['Traffic'] = true
       break;
     case '休閒娛樂':
-      typeOption.Fun = true
+      typeOption['Fun'] = true
       break;
     case '餐飲食品':
-      typeOption.Food = true
+      typeOption['Food'] = true
       break;
     case '其他':
-      typeOption.Other = true
+      typeOption['Other'] = true
       break;
     case 'All':
-      typeOption.All = true
+      typeOption['All'] = true
       break;
   }
 
   //預設篩選條件
   let filter = { userId: req.user._id }
 
-  //增加篩選條件-支出類別
+  //判斷是否增加篩選條件-支出類別
   if (req.query.type !== '類別' && req.query.type !== 'All') {
     filter['category'] = req.query.type
   }
@@ -117,12 +97,12 @@ router.get('/category', authenticated, (req, res) => {
     //判斷有無指定篩選條件-支出月份
     if (req.query.month !== '月份' && req.query.month !== 'All') {
 
-      //如果有指定月份
+      //篩選出與指定月份相符的資料
       for (let i = 0; i < records.length; i++) {
         let dataSplit = records[i].date.split('-')
         let selectedMonth = dataSplit[1] + '月'
 
-        //篩選出與指定月份相符的資料
+        //將資料丟進新陣列中
         if (selectedMonth === req.query.month) {
           selectedRecords.push(records[i])
         }
@@ -186,28 +166,22 @@ router.post('/', authenticated, (req, res) => {
 // 修改 record 頁面
 router.get('/:id/edit', authenticated, (req, res) => {
   Record.findOne({ _id: req.params.id, userId: req.user._id }, (err, record) => {
-    let categoryFor = {
-      Home: false,
-      Traffic: false,
-      Fun: false,
-      Food: false,
-      Other: false
-    }
+    let categoryFor = {}
     switch (record.category) {
       case '家居物業':
-        categoryFor.Home = true
+        categoryFor['Home'] = true
         break;
       case '交通出行':
-        categoryFor.Traffic = true
+        categoryFor['Traffic'] = true
         break;
       case '休閒娛樂':
-        categoryFor.Fun = true
+        categoryFor['Fun'] = true
         break;
       case '餐飲食品':
-        categoryFor.Food = true
+        categoryFor['Food'] = true
         break;
       case '其他':
-        categoryFor.Other = true
+        categoryFor['Other'] = true
         break;
     }
     if (err) return console.error(err)

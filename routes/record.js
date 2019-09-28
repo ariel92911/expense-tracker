@@ -6,9 +6,6 @@ const Record = require('../models/record')
 // 載入 auth middleware
 const { authenticated } = require('../config/auth')
 
-let type = '1'
-let month = '01'
-
 // 設定 /records 路由
 // 列出全部 record
 router.get('/', authenticated, (req, res) => {
@@ -16,73 +13,64 @@ router.get('/', authenticated, (req, res) => {
 })
 
 // 列出特定類別 record
-router.get('/category/:item', authenticated, (req, res) => {
-  const options = req.body
-  console.log(options)
-  let category = ''
-  var itemSplit = req.params.item.split('_')
-  let categorySelect = itemSplit[0]
-  switch (categorySelect) {
-    case 'type':
-      type = itemSplit[1]
-      break;
-    case 'month':
-      month = itemSplit[1]
-      break;
+router.get('/category', authenticated, (req, res) => {
+
+  //預設篩選條件
+  let filter = { userId: req.user._id }
+
+  //增加篩選條件-支出類別
+  if (req.query.type !== '類別' && req.query.type !== 'All') {
+    filter['category'] = req.query.type
   }
 
-  switch (type) {
-    case '1':
-      category = '家居物業'
-      break;
-    case '2':
-      category = '交通出行'
-      break;
-    case '3':
-      category = '休閒娛樂'
-      break;
-    case '4':
-      category = '餐飲食品'
-      break;
-    case '5':
-      category = '其他'
-      break;
-  }
-  //Document docu
-  let arrary = []
-  Record.find({ 'category': category, userId: req.user._id }, (err, records) => {
-    let totalAmount = 0
-    for (let i = 0; i < records.length; i++) {
-      var dataSplit = records[i].date.split('-')
-      if (month !== dataSplit[1]) {
-        records[i].category = '-1'
-        continue
-      }
-      else {
-        totalAmount += records[i].amount
-        switch (records[i].category) {
-          case '家居物業':
-            records[i].category = '<i class="fas fa-home fa-3x"></i>'
-            break;
-          case '交通出行':
-            records[i].category = '<i class="fas fa-shuttle-van fa-3x"></i>'
-            break;
-          case '休閒娛樂':
-            records[i].category = '<i class="fas fa-grin-beam fa-3x"></i>'
-            break;
-          case '餐飲食品':
-            records[i].category = '<i class="fas fa-utensils fa-3x"></i>'
-            break;
-          case '其他':
-            records[i].category = '<i class="fas fa-pen fa-3x"></i>'
-            break;
+  Record.find(filter, (err, records) => {
+    let selectedRecords = []
+
+    //判斷有無指定篩選條件-支出月份
+    if (req.query.month !== '月份' && req.query.month !== 'All') {
+
+      //如果有指定月份
+      for (let i = 0; i < records.length; i++) {
+        let dataSplit = records[i].date.split('-')
+        let selectedMonth = dataSplit[1] + '月'
+
+        //篩選出與指定月份相符的資料
+        if (selectedMonth === req.query.month) {
+          selectedRecords.push(records[i])
         }
-        arrary.push(records[i])
       }
+    } else {
+      selectedRecords = records
     }
 
+    let totalAmount = 0
+    for (let i = 0; i < selectedRecords.length; i++) {
+      totalAmount += selectedRecords[i].amount
+
+      switch (selectedRecords[i].category) {
+        case '家居物業':
+          selectedRecords[i].category = '<i class="fas fa-home fa-3x"></i>'
+          break;
+        case '交通出行':
+          selectedRecords[i].category = '<i class="fas fa-shuttle-van fa-3x"></i>'
+          break;
+        case '休閒娛樂':
+          selectedRecords[i].category = '<i class="fas fa-grin-beam fa-3x"></i>'
+          break;
+        case '餐飲食品':
+          selectedRecords[i].category = '<i class="fas fa-utensils fa-3x"></i>'
+          break;
+        case '其他':
+          selectedRecords[i].category = '<i class="fas fa-pen fa-3x"></i>'
+          break;
+        default:
+          console.log('沒有此類別')
+          break;
+      }
+
+    }
     if (err) return console.error(err)
-    return res.render('category', { records: arrary, totalAmount })
+    return res.render('index', { records: selectedRecords, totalAmount })  // 將資料傳給 index 樣板
   })
 })
 

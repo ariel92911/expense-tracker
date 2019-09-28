@@ -36,7 +36,7 @@ router.get('/', authenticated, (req, res) => {
 
     }
     if (err) return console.error(err)
-    return res.render('index', { records: records, totalAmount })  // 將資料傳給 index 樣板
+    return res.render('index', { records, totalAmount })  // 將資料傳給 index 樣板
   })
 })
 
